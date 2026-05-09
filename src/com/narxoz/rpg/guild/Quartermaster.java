@@ -9,13 +9,17 @@ public class Quartermaster extends GuildMember {
         super(name, mediator);
     }
 
-    public void requestSupplies(String topic, String payload) {
-        // TODO: send a supply-related message through the mediator.
-        getMediator().dispatch(topic, this, payload);
-    }
-
-    @Override
-    public void receive(String topic, GuildMember from, String payload) {
-        // TODO: react to a guild-hall message without calling another colleague directly.
-    }
+    public void requestSupplies(String payload) {
+    getMediator().dispatch("SUPPLY", this, payload);
 }
+
+   @Override
+    public void receive(String topic, GuildMember from, String payload) {
+    System.out.println("[" + getName() + " (Quartermaster)] Received message on topic: " + topic);
+    System.out.println("   From: " + from.getName());
+    System.out.println("   Details: " + payload);
+
+    if (topic.equals("SUPPLY")) {
+        System.out.println("   Action: Logged in the ledger and preparing crates.");
+    }
+}}
